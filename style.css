@@ -1,0 +1,146 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Ubuntu:ital,wght@0,400;0,500;0,700;1,700&display=swap');
+
+body {
+  background-color: antiquewhite;
+}
+
+*{
+  margin: 0;
+  padding: 0;
+}
+
+/* Navbar Design */
+nav {
+  font-family: "Ubuntu", sans-serif;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgb(0, 0, 0);
+  color: white;
+}
+
+a {
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+  margin-right: 30px;
+}
+
+.nav-right {
+  margin-top: 10px;
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nav-left img {
+  width: 40px;
+  margin-top: 7px;
+  margin-left: 20px;
+  padding-bottom: 5px;
+} 
+
+.nav-left p {
+  margin-top: 6px;
+  font-weight: bolder;
+  font-size: 1.2rem;
+}
+
+/* Container Design */
+.songItemcontainer {
+  margin-top: 50px;
+}
+
+.songItem {
+  height: 40px;
+  display: flex;
+  background-color: white;
+  width: 300px;
+  color: black;
+  margin: 12px 0 ;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 24px;
+  padding-right: 15px;
+}
+
+#bannerImg {
+  width: 35px;
+  margin: 0 10px;
+  border-radius: 50%;
+}
+
+.timeStamp {
+  margin:  0 12px 20px 0;
+ font-size: 12px;
+}
+
+.songListIcon {
+  width: 12px;
+  padding-top: 6px;
+  cursor: pointer;
+  filter: brightness(0%);
+}
+
+/* Song Play Bar Design */
+.container {
+  min-height: 67vh;
+  background-color: black;
+  color: white;
+  font-family: "Varela Round", sans-serif;
+  display: flex;
+  margin: 23px auto;
+  width: 70%;
+  border-radius: 12px;
+  padding: 34px;
+  background-image: url(images/bg.jpg);
+  background-size: cover;
+}
+
+.bottom {
+  position: sticky;
+  bottom: 0;
+  background-color: rgb(0, 0, 0);
+  color: white;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+#songBar {
+  width: 70vw;
+  margin: 10px 0px 10px 10px;
+  cursor: pointer;
+}
+
+.icons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.icons img {
+  cursor: pointer;
+  width: 22px;
+}
+
+#masterPlay {
+  margin: 0px 40px;
+  width: 18px;
+}
+
+.songInfo {
+  position: absolute;
+  left: 14.6vw;
+  bottom: 2.5vh;
+}
+
+.songInfo img {
+  margin-right: 10px;
+  opacity: 0;
+  transition: opacity 0.4s ease-in;
+}
