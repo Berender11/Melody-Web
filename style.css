@@ -32,13 +32,13 @@ a {
 .nav-left {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 20px;
 }
 
 .nav-left img {
   width: 40px;
   margin-top: 7px;
-  margin-left: 20px;
+  margin-left: 40px;
   padding-bottom: 5px;
 } 
 
@@ -112,7 +112,7 @@ a {
 }
 
 #songBar {
-  width: 70vw;
+  width: 60vw;
   margin: 10px 0px 10px 10px;
   cursor: pointer;
 }
@@ -135,12 +135,26 @@ a {
 
 .songInfo {
   position: absolute;
-  left: 14.6vw;
-  bottom: 2.5vh;
+  left: 4vw;
+  bottom: 5.5vh;
+  font-size: 18px;
 }
 
 .songInfo img {
   margin-right: 10px;
   opacity: 0;
   transition: opacity 0.4s ease-in;
+}
+
+.volumeIcon {
+  width: 22px;
+  position: absolute;
+  right: 13vw;
+  bottom: 42px;
+}
+
+.volume-container {
+  position: absolute;
+  right: 4vw;
+  bottom: 40px;
 }
