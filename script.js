@@ -63,7 +63,10 @@ function playSong(song) {
   audio.volume = volumeControl.value;
   audio.play()
     .then(() => {
-      masterSongName.textContent = `${song.name} - ${song.artist_name}`;
+      masterSongName.innerHTML = `
+        <span class="track-title">${song.name}</span><br>
+        <span class="track-artist">${song.artist_name}</span>
+      `;
       gif.style.opacity = 1;
       masterPlay.src = "icons/pause-solid.svg";
     })
