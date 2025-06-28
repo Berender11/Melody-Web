@@ -1,4 +1,6 @@
-const API_URL = "https://api.jamendo.com/v3.0/tracks/?client_id=f42ab926&format=json&limit=7&audioformat=mp32";
+const offset = Math.floor(Math.random() * 1000); // random offset
+const API_URL = `https://api.jamendo.com/v3.0/tracks/?client_id=f42ab926&format=json&limit=7&audioformat=mp32&order=popularity_total&offset=${offset}`;
+
 
 const masterPlay = document.getElementById("masterPlay");
 const progressBar = document.getElementById("songBar");
@@ -15,7 +17,7 @@ async function loadSongs() {
     const res = await fetch(API_URL);
     const data = await res.json();
     songList = data.results;
-    
+
     const container = document.getElementById("songListContainer");
 
     songList.forEach((song, index) => {
@@ -74,9 +76,18 @@ masterPlay.addEventListener("click", () => {
   }
 });
 
+function formatTime(seconds) {
+  const mins = Math.floor(seconds / 60);
+  const secs = Math.floor(seconds % 60);
+  return `${mins < 10 ? '0' : ''}${mins}:${secs < 10 ? '0' : ''}${secs}`;
+}
+
 audio.addEventListener("timeupdate", () => {
   const progress = parseInt((audio.currentTime / audio.duration) * 100);
   progressBar.value = progress || 0;
+
+  document.getElementById("currentTime").textContent = formatTime(audio.currentTime);
+  document.getElementById("totalDuration").textContent = formatTime(audio.duration);
 });
 
 progressBar.addEventListener("change", () => {

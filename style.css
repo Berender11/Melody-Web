@@ -1,7 +1,7 @@
 :root {
   --primary-bg: #121212;
   --secondary-bg: #1e1e1e;
-  --accent: #e67e22;             /* Warm orange */
+  --accent: #e67e22;             
   --accent-hover: #d35400;
   --text-main: #ffffff;
   --text-secondary: #b0b0b0;
@@ -66,6 +66,7 @@ a:hover {
   margin-top: 7px;
   margin-left: 40px;
   padding-bottom: 5px;
+  border-radius: 50%;
 }
 
 .nav-left p {
@@ -82,20 +83,72 @@ a:hover {
 }
 
 .songItem {
-  height: 56px;
   display: flex;
+  align-items: center;
+  justify-content: space-between;
   background: var(--card-bg);
   color: var(--text-main);
   width: 340px;
   margin: 16px 0;
-  justify-content: space-between;
-  align-items: center;
   border-radius: var(--border-radius);
-  padding-right: 18px;
+  padding: 0 16px;
+  height: 56px;
   box-shadow: var(--shadow);
   transition: background 0.2s, transform 0.2s;
   cursor: pointer;
 }
+
+.songItem:hover {
+  background: var(--card-hover);
+  transform: translateY(-2px) scale(1.02);
+}
+
+.songItem img.bannerImg {
+  width: 44px;
+  border-radius: 50%;
+  margin-right: 12px;
+  border: 2px solid var(--accent);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+}
+
+.songName {
+  flex: 1;
+  font-weight: 500;
+  font-size: 1.05rem;
+  color: var(--text-main);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.songName:hover {
+  overflow: visible;
+  white-space: normal;
+  background: rgba(0, 0, 0, 0.8);
+  padding: 4px 6px;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 10;
+}
+
+.songlistplay {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.timeStamp {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.time-progress {
+  font-size: 14px;
+  font-family: monospace;
+  color: var(--text-secondary);
+  min-width: 100px;
+}
+
 .songItem:hover {
   background: var(--card-hover);
   transform: translateY(-2px) scale(1.02);
@@ -113,12 +166,6 @@ a:hover {
   font-weight: 500;
   font-size: 1.1rem;
   color: var(--text-main);
-}
-
-.timeStamp {
-  margin: 0 12px 20px 0;
-  font-size: 13px;
-  color: var(--text-secondary);
 }
 
 .songListIcon {
@@ -255,7 +302,6 @@ a:hover {
 #volume {
   width: 100px;
 }
-
 
 @media (max-width: 900px) {
   .container {
