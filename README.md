@@ -49,19 +49,19 @@
 
 ## ✨ Future Enhancements
 
-   -🔍 Search by artist/genre
-   -❤️ Favorite playlists (using localStorage)
-   -🧑‍💻 Backend with saved playlists (Node.js + MongoDB or Firebase)
+   - 🔍 Search by artist/genre
+   - ❤️ Favorite playlists (using localStorage)
+   - 🧑‍💻 Backend with saved playlists (Node.js + MongoDB or Firebase)
 
 ---
 
 ## 📄 License
 
-This project is licensed for educational and portfolio use.
-Music is streamed via Jamendo under their royalty-free developer terms.
+- This project is licensed for educational and portfolio use.
+- Music is streamed via Jamendo under their royalty-free developer terms.
 
 ---
 
 👤 Author
-Made by Berender — fueled by music 🎧
-Feel free to connect or check out more on [GitHub](https://github.com/Berender11)
+- Made by Berender — fueled by music 🎧
+- Feel free to connect or check out more on [GitHub](https://github.com/Berender11)
