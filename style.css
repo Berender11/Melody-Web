@@ -77,9 +77,32 @@ a:hover {
   color: var(--accent);
 }
 
-/* Container Design */
 .songItemcontainer {
   margin-top: 50px;
+  max-height: 500px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 4px;
+}
+
+.songItemcontainer::-webkit-scrollbar {
+  width: 8px;
+}
+
+.songItemcontainer::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.songItemcontainer::-webkit-scrollbar-thumb {
+  background-color: var(--card-hover);
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+.songItemcontainer {
+  scrollbar-width: thin;
+  scrollbar-color: var(--card-hover) transparent;
 }
 
 .songItem {
