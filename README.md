@@ -18,8 +18,8 @@
 
 ## 📸 Preview
 
-![Melody Web UI Screenshot](./images/screenshot.png)  
-*(Replace with an actual screenshot of your app)*
+![image](https://github.com/user-attachments/assets/21a4cb46-87f9-4f59-9270-24523ddf139e)
+
 
 ---
 
