@@ -1,12 +1,30 @@
+:root {
+  --primary-bg: #121212;
+  --secondary-bg: #1e1e1e;
+  --accent: #e67e22;             /* Warm orange */
+  --accent-hover: #d35400;
+  --text-main: #ffffff;
+  --text-secondary: #b0b0b0;
+  --card-bg: #2c2c2c;
+  --card-hover: #3a3a3a;
+  --border-radius: 16px;
+  --shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Ubuntu:ital,wght@0,400;0,500;0,700;1,700&display=swap');
 
 body {
-  background-color: antiquewhite;
+  background: linear-gradient(135deg, var(--primary-bg) 60%, var(--secondary-bg) 100%);
+  color: var(--text-main);
+  font-family: 'Roboto', 'Ubuntu', sans-serif;
+  min-height: 100vh;
 }
 
-*{
+* {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
 /* Navbar Design */
@@ -15,14 +33,22 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: rgb(0, 0, 0);
-  color: white;
+  background: var(--secondary-bg);
+  color: var(--text-main);
+  box-shadow: var(--shadow);
+  padding: 0 32px;
+  height: 64px;
 }
 
 a {
   text-decoration: none;
-  color: rgb(255, 255, 255);
+  color: var(--text-main);
   margin-right: 30px;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+a:hover {
+  color: var(--accent);
 }
 
 .nav-right {
@@ -40,12 +66,14 @@ a {
   margin-top: 7px;
   margin-left: 40px;
   padding-bottom: 5px;
-} 
+}
 
 .nav-left p {
   margin-top: 6px;
   font-weight: bolder;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
+  letter-spacing: 1px;
+  color: var(--accent);
 }
 
 /* Container Design */
@@ -54,107 +82,215 @@ a {
 }
 
 .songItem {
-  height: 40px;
+  height: 56px;
   display: flex;
-  background-color: white;
-  width: 300px;
-  color: black;
-  margin: 12px 0 ;
+  background: var(--card-bg);
+  color: var(--text-main);
+  width: 340px;
+  margin: 16px 0;
   justify-content: space-between;
   align-items: center;
-  border-radius: 24px;
-  padding-right: 15px;
+  border-radius: var(--border-radius);
+  padding-right: 18px;
+  box-shadow: var(--shadow);
+  transition: background 0.2s, transform 0.2s;
+  cursor: pointer;
+}
+.songItem:hover {
+  background: var(--card-hover);
+  transform: translateY(-2px) scale(1.02);
 }
 
-#bannerImg {
-  width: 35px;
-  margin: 0 10px;
+.bannerImg {
+  width: 44px;
+  margin: 0 14px;
   border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+  border: 2px solid var(--accent);
+}
+
+.songName {
+  font-weight: 500;
+  font-size: 1.1rem;
+  color: var(--text-main);
 }
 
 .timeStamp {
-  margin:  0 12px 20px 0;
- font-size: 12px;
+  margin: 0 12px 20px 0;
+  font-size: 13px;
+  color: var(--text-secondary);
 }
 
 .songListIcon {
-  width: 12px;
+  width: 18px;
   padding-top: 6px;
   cursor: pointer;
-  filter: brightness(0%);
+  filter: brightness(0) invert(1);
+  transition: filter 0.2s;
+}
+.songListIcon:hover {
+  filter: brightness(0) invert(0.7) sepia(1) hue-rotate(-20deg) saturate(5) brightness(1.2);
 }
 
 /* Song Play Bar Design */
 .container {
   min-height: 67vh;
-  background-color: black;
-  color: white;
+  background: var(--secondary-bg);
+  color: var(--text-main);
   font-family: "Varela Round", sans-serif;
   display: flex;
   margin: 23px auto;
   width: 70%;
-  border-radius: 12px;
+  border-radius: 18px;
   padding: 34px;
   background-image: url(images/bg.jpg);
   background-size: cover;
+  box-shadow: var(--shadow);
 }
 
 .bottom {
   position: sticky;
   bottom: 0;
-  background-color: rgb(0, 0, 0);
-  color: white;
-  height: 80px;
+  background: var(--secondary-bg);
+  color: var(--text-main);
+  height: 90px;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  box-shadow: 0 -2px 24px rgba(0,0,0,0.18);
+  border-top-left-radius: var(--border-radius);
+  border-top-right-radius: var(--border-radius);
 }
 
 #songBar {
   width: 60vw;
   margin: 10px 0px 10px 10px;
   cursor: pointer;
+  accent-color: var(--accent);
+  background: var(--primary-bg);
+  border-radius: 8px;
+  height: 4px;
 }
 
 .icons {
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 32px;
 }
 
 .icons img {
   cursor: pointer;
-  width: 22px;
+  width: 28px;
+  filter: invert(1) brightness(1.2);
+  transition: filter 0.2s, transform 0.2s;
+}
+.icons img:hover {
+  filter: invert(1) brightness(1.5) sepia(1) hue-rotate(-20deg) saturate(5) brightness(1.2);
+  transform: scale(1.15);
 }
 
 #masterPlay {
   margin: 0px 40px;
-  width: 18px;
+  width: 28px;
 }
 
 .songInfo {
-  position: absolute;
-  left: 4vw;
-  bottom: 5.5vh;
-  font-size: 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+  color: var(--text-secondary);
 }
-
 .songInfo img {
-  margin-right: 10px;
   opacity: 0;
-  transition: opacity 0.4s ease-in;
+  transition: opacity 0.3s ease-in;
 }
 
 .volumeIcon {
-  width: 22px;
+  width: 26px;
   position: absolute;
   right: 13vw;
   bottom: 42px;
+  filter: invert(1) brightness(1.2);
 }
 
 .volume-container {
   position: absolute;
   right: 4vw;
   bottom: 40px;
+}
+
+#volume {
+  accent-color: var(--accent);
+  width: 110px;
+  margin-left: 8px;
+  border-radius: 8px;
+  background: var(--primary-bg);
+  height: 4px;
+}
+
+.controls-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.volume-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.volumeIcon {
+  position: static;
+  width: 24px;
+  filter: invert(1) brightness(1.2);
+}
+
+#volume {
+  width: 100px;
+}
+
+
+@media (max-width: 900px) {
+  .container {
+    width: 95%;
+    padding: 18px;
+  }
+  .songItem {
+    width: 95vw;
+    max-width: 340px;
+  }
+  #songBar {
+    width: 90vw;
+  }
+}
+
+@media (max-width: 600px) {
+  .bottom {
+    height: auto;
+    padding: 16px 10px;
+    flex-direction: column;
+  }
+
+  .controls-bar {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .volume-controls {
+    justify-content: center;
+  }
+
+  .songInfo {
+    position: static;
+    font-size: 16px;
+    margin-top: 10px;
+    justify-content: center;
+  }
 }
