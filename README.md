@@ -16,9 +16,17 @@
 
 ---
 
+## 🔗 Live Demo
+
+👉 [Click here to try Melody Web](https://melody-web-eight.vercel.app/)
+
+---
+
 ## 📸 Preview
 
 ![image](https://github.com/user-attachments/assets/21a4cb46-87f9-4f59-9270-24523ddf139e)
+![image](https://github.com/user-attachments/assets/bc8472f1-ad72-47ca-a34d-a8285f160ba5)
+
 
 
 ---
