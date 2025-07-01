@@ -1,14 +1,16 @@
-// Melody Web: Dynamic Song Loader with Infinite Scroll
-
 let offset = Math.floor(Math.random() * 1000); // start with random offset
 let loading = false;
+let masterPlayInitialized = false;
+currentSongIndex = -1;
 let songList = [];
+let likedSongs = JSON.parse(localStorage.getItem("likedSongs")) || [];
 
 const masterPlay = document.getElementById("masterPlay");
 const progressBar = document.getElementById("songBar");
 const gif = document.getElementById("gif");
 const masterSongName = document.getElementById("masterSongName");
 const volumeControl = document.getElementById("volume");
+const volumeIcon = document.querySelector(".volumeIcon");
 const audio = new Audio();
 
 // Format seconds to mm:ss
@@ -27,26 +29,64 @@ async function loadSongs(offsetValue = 0) {
     const res = await fetch(API_URL);
     const data = await res.json();
     const songs = data.results;
+    songList = songList.concat(songs);
     const container = document.getElementById("songListContainer");
 
     songs.forEach((song, index) => {
       const globalIndex = container.children.length;
       const songDiv = document.createElement("div");
       songDiv.className = "songItem";
+      songDiv.setAttribute("data-index", globalIndex);
       songDiv.innerHTML = `
         <img src="${song.album_image}" class="bannerImg" alt="cover">
         <span class="songName">${song.name}</span>
         <span class="songlistplay">
-          <span class="timeStamp">${formatTime(song.duration)}</span>
-          <span><img id="play-${globalIndex}" class="songListIcon" src="icons/play-solid.svg" alt="Play"></span>
+          <span class="timeStamp">
+            ${formatTime(song.duration)}
+          </span>
+          <span>
+            <img id="play-${globalIndex}" class="songListIcon" src="icons/play-solid.svg" alt="Play">
+          </span>
+          <span>
+            <img id="like-${globalIndex}" class="likeIcon" src="icons/heart-regular.svg" alt="Like" style="width:18px; cursor:pointer;">
+          </span>
         </span>
       `;
       container.appendChild(songDiv);
 
       document.getElementById(`play-${globalIndex}`).addEventListener("click", () => {
-        playSong(song);
+        playSong(song, globalIndex);
       });
+
+      document.getElementById(`like-${globalIndex}`).addEventListener('click', () =>{
+        toggleLike(song, globalIndex);
+      })
+
+      if (likedSongs.includes(String(song.id))) {
+        const likeIcon = document.getElementById(`like-${globalIndex}`);
+        likeIcon.src = "icons/heart-solid.svg";
+        likeIcon.classList.add("liked");
+      }
     });
+
+    // Set first song in master player (only on first load)
+    if (!masterPlayInitialized && songs.length > 0) {
+      masterPlayInitialized = true;
+      const firstSong = songs[0];
+      audio.src = firstSong.audio;
+      currentSongIndex = 0;
+      masterSongName.innerHTML = `
+        <span class="track-title">${firstSong.name}</span>
+        <span class="track-artist">${firstSong.artist_name}</span>
+      `;
+      document.getElementById("currentTime").textContent = "00:00";
+      document.getElementById("totalDuration").textContent = formatTime(firstSong.duration);
+      gif.style.opacity = 0;
+      progressBar.value = 0;
+      volumeControl.value = 0.5; 
+      audio.volume = volumeControl.value;
+      masterPlay.src = "icons/play-solid.svg";
+    }
 
     loading = false;
   } catch (err) {
@@ -55,7 +95,7 @@ async function loadSongs(offsetValue = 0) {
   }
 }
 
-function playSong(song) {
+function playSong(song, index = null) {
   if (!song) return;
 
   audio.src = song.audio;
@@ -63,6 +103,8 @@ function playSong(song) {
   audio.volume = volumeControl.value;
   audio.play()
     .then(() => {
+      currentSongIndex = index !== null ? index : songList.findIndex(s => s.audio === song.audio);
+
       masterSongName.innerHTML = `
         <span class="track-title">${song.name}</span><br>
         <span class="track-artist">${song.artist_name}</span>
@@ -76,6 +118,25 @@ function playSong(song) {
     });
 }
 
+function toggleLike(song, index) {
+  const likeIcon = document.getElementById(`like-${index}`);
+  const songId = String(song.id);
+  const isLiked = likedSongs.includes(songId);
+
+  if(isLiked){
+    likedSongs = likedSongs.filter(index => index !== songId);
+    likeIcon.src = "icons/heart-regular.svg";
+    likeIcon.classList.remove("liked");
+  }
+  else {
+    likedSongs.push(songId);
+    likeIcon.src = "icons/heart-solid.svg";
+    likeIcon.classList.add("liked");
+  }
+
+  localStorage.setItem("likedSongs", JSON.stringify(likedSongs));
+}
+
 masterPlay.addEventListener("click", () => {
   if (audio.paused || audio.currentTime <= 0) {
     audio.play().then(() => {
@@ -84,6 +145,41 @@ masterPlay.addEventListener("click", () => {
     });
   } else {
     audio.pause();
+    masterPlay.src = "icons/play-solid.svg";
+    gif.style.opacity = 0;
+  }
+});
+
+document.getElementById("nextBtn").addEventListener("click", () => {
+  if (currentSongIndex < songList.length - 1) {
+    playSong(songList[currentSongIndex + 1], currentSongIndex + 1);
+  }
+});
+
+document.getElementById("previousBtn").addEventListener("click", () => {
+  if (currentSongIndex > 0) {
+    playSong(songList[currentSongIndex - 1], currentSongIndex - 1);
+  }
+});
+
+volumeIcon.addEventListener("click", () => {
+  if (audio.volume > 0) {
+    audio.volume = 0;
+    volumeControl.value = 0; 
+    volumeIcon[0].src = "icons/volume-mute-solid.svg";
+  } else {
+    audio.volume = 0.5;
+    volumeControl.value = 0.5;
+    volumeIcon[0].src = "icons/volume-up-solid.svg";
+  }
+});
+audio.addEventListener("ended", () => {
+  masterPlay.src = "icons/play-solid.svg";
+  gif.style.opacity = 0;
+  if (currentSongIndex < songList.length - 1) {
+    playSong(songList[currentSongIndex + 1], currentSongIndex + 1);
+  } else {
+    audio.currentTime = 0; // Reset to start if no next song
     masterPlay.src = "icons/play-solid.svg";
     gif.style.opacity = 0;
   }

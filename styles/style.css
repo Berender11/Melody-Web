@@ -1,3 +1,5 @@
+/* NO LONGER IN USE */
+
 :root {
   --primary-bg: #121212;
   --secondary-bg: #1e1e1e;
@@ -157,7 +159,7 @@ a:hover {
 .songlistplay {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
 }
 
 .timeStamp {
@@ -170,11 +172,6 @@ a:hover {
   font-family: monospace;
   color: var(--text-secondary);
   min-width: 100px;
-}
-
-.songItem:hover {
-  background: var(--card-hover);
-  transform: translateY(-2px) scale(1.02);
 }
 
 .bannerImg {
@@ -190,12 +187,30 @@ a:hover {
   padding-top: 6px;
   cursor: pointer;
   filter: brightness(0) invert(1);
-  transition: filter 0.2s;
+  transition: transform 0.2s, filter 0.2s;
+
 }
 .songListIcon:hover {
+  transform: scale(1.2);
   filter: brightness(0) invert(0.7) sepia(1) hue-rotate(-20deg) saturate(5) brightness(1.2);
 }
 
+.likeIcon {
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+  transition: transform 0.2s, filter 0.2s;
+  filter: brightness(0) invert(1);
+  margin-left: 8px;
+}
+
+.likeIcon:hover {
+  transform: scale(1.2); /* subtle bounce */
+}
+
+.likeIcon.liked {
+  filter: none;
+}
 /* Song Play Bar Design */
 .container {
   min-height: 67vh;
@@ -207,7 +222,7 @@ a:hover {
   width: 70%;
   border-radius: 18px;
   padding: 34px;
-  background-image: url(images/bg.jpg);
+  background-image: url(../images/bg.jpg);
   background-size: cover;
   box-shadow: var(--shadow);
 }
@@ -258,6 +273,8 @@ a:hover {
 #masterPlay {
   margin: 0px 40px;
   width: 28px;
+  height: 28px;
+  object-fit: contain;
 }
 
 .songInfo {
@@ -415,26 +432,159 @@ input[type="range"]::-moz-range-thumb:hover {
   }
 }
 
+/* Responsive design for smartphones */
 @media (max-width: 600px) {
+  nav {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: auto;
+    padding: 10px 8px;
+    gap: 0;
+  }
+  .nav-left {
+    margin-left: 0;
+    gap: 10px;
+    flex-direction: row;
+    align-items: center;
+    display: flex;
+  }
+  .nav-left img {
+    margin-left: 0;
+    width: 32px;
+  }
+  .nav-left p {
+    font-size: 1.1rem;
+    display: none; /* Hide Melody Web text on mobile */
+  }
+  .nav-right {
+    margin-top: 0;
+    display: flex;
+    gap: 10px;
+    width: auto;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  .nav-right a {
+    margin-right: 0;
+    font-size: 1rem;
+  }
+
+  .container {
+    width: 100vw;
+    min-height: unset;
+    padding: 10px 2vw;
+    margin: 10px 0;
+    border-radius: 0;
+    box-shadow: none;
+    background-size: cover;
+  }
+  .songList h1 {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+  }
+  .songItemcontainer {
+    margin-top: 20px;
+    /* Adjust max-height to fit between nav and fixed bottom bar */
+    max-height: calc(100vh - 64px - 110px - 30px); /* nav + bottom + margin */
+    padding-right: 0;
+  }
+  .songItem {
+    width: 98vw;
+    max-width: 100vw;
+    min-width: 0;
+    margin: 10px 0;
+    padding: 0 8px;
+    height: 48px;
+    font-size: 0.98rem;
+  }
+  .songItem img.bannerImg,
+  .bannerImg {
+    width: 36px;
+    margin: 0 6px 0 0;
+  }
+  .songName {
+    font-size: 0.98rem;
+    max-width: 90px;
+  }
+  .songlistplay {
+    gap: 6px;
+  }
+  .timeStamp {
+    font-size: 12px;
+  }
+  .songListIcon,
+  .likeIcon {
+    width: 16px;
+    height: 16px;
+    padding-top: 2px;
+  }
+
   .bottom {
     height: auto;
-    padding: 16px 10px;
+    padding: 10px 2vw;
     flex-direction: column;
+    border-radius: 0;
+    box-shadow: none;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100;
+    width: 100vw;
   }
-
+  body {
+    padding-bottom: 110px; /* Prevent content from being hidden behind the fixed player */
+  }
   .controls-bar {
     flex-direction: column;
-    gap: 12px;
+    gap: 10px;
+    margin-bottom: 8px;
+    min-height: unset;
+    width: 100%;
   }
-
+  .time-progress {
+    font-size: 12px;
+    min-width: 80px;
+  }
+  #songBar {
+    width: 90vw;
+    margin: 6px 0;
+    height: 3px;
+  }
   .volume-controls {
-    justify-content: center;
+    gap: 6px;
   }
-
-  .songInfo {
+  .volumeIcon {
+    width: 18px;
     position: static;
-    font-size: 16px;
-    margin-top: 10px;
-    justify-content: center;
+    right: unset;
+    bottom: unset;
+  }
+  #volume {
+    width: 70px;
+    margin-left: 4px;
+    height: 3px;
+  }
+  .songInfo {
+    font-size: 13px;
+    margin-top: 6px;
+    gap: 6px;
+  }
+  .songInfo img {
+    width: 18px !important;
+  }
+  #masterSongName {
+    font-size: 12px;
+    max-width: 120px;
+  }
+  .icons {
+    gap: 18px;
+    margin-top: 4px;
+  }
+  .icons img,
+  #masterPlay {
+    width: 22px;
+    margin: 0 10px;
   }
 }

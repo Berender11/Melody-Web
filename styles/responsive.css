@@ -1,0 +1,52 @@
+@media (max-width: 900px) {
+  .container {
+    width: 95%;
+    padding: 18px;
+  }
+
+  .songItem {
+    width: 95vw;
+    max-width: 340px;
+  }
+
+  #songBar {
+    width: 90vw;
+  }
+}
+
+@media (max-width: 600px) {
+  .bottom {
+    padding: 16px 10px;
+    flex-direction: column;
+  }
+
+  .controls-bar {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .volume-controls,
+  .songInfo {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  .songInfo {
+    align-items: center;
+    max-width: 90vw;
+  }
+
+  .songName:hover {
+    background: none;
+    padding: 0;
+    border-radius: 0;
+    position: static;
+    white-space: nowrap;
+  }
+
+  .likeIcon.liked {
+    box-shadow: none;
+  }
+}

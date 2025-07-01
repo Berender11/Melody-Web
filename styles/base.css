@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Ubuntu:wght@400;500;700&display=swap');
+
+:root {
+  --primary-bg: #121212;
+  --secondary-bg: #1e1e1e;
+  --accent: #e67e22;
+  --accent-hover: #d35400;
+  --text-main: #ffffff;
+  --text-secondary: #b0b0b0;
+  --card-bg: #2c2c2c;
+  --card-hover: #3a3a3a;
+  --border-radius: 16px;
+  --shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: linear-gradient(135deg, var(--primary-bg) 60%, var(--secondary-bg) 100%);
+  color: var(--text-main);
+  font-family: 'Roboto', 'Ubuntu', sans-serif;
+  min-height: 100vh;
+}
+
+a {
+  text-decoration: none;
+  color: var(--text-main);
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+a:hover {
+  color: var(--accent);
+}
