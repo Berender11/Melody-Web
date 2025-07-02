@@ -134,8 +134,12 @@ nav {
 }
 
 .songListIcon:hover {
-  filter: invert(1) sepia(1) hue-rotate(-20deg) saturate(5);
+  filter: brightness(0) invert(0.7) sepia(1) hue-rotate(-20deg) saturate(5) brightness(1.2);
   transform: scale(1.2);
+}
+
+.songListIcon.playing {
+  content: url("../icons/pause-solid.svg");
 }
 
 .likeIcon {

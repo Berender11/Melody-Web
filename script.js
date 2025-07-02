@@ -98,6 +98,8 @@ async function loadSongs(offsetValue = 0) {
 function playSong(song, index = null) {
   if (!song) return;
 
+  document.querySelectorAll(".songListIcon").forEach(el => el.classList.remove("playing"));
+
   audio.src = song.audio;
   audio.load();
   audio.volume = volumeControl.value;
@@ -106,11 +108,17 @@ function playSong(song, index = null) {
       currentSongIndex = index !== null ? index : songList.findIndex(s => s.audio === song.audio);
 
       masterSongName.innerHTML = `
-        <span class="track-title">${song.name}</span><br>
-        <span class="track-artist">${song.artist_name}</span>
+        <span class="track-title" title="${song.name}">${truncateText(song.name)}</span><br>
+        <span class="track-artist" title="${song.artist_name}">${truncateText(song.artist_name)}</span>
       `;
       gif.style.opacity = 1;
       masterPlay.src = "icons/pause-solid.svg";
+      if (index !== null) {
+        const currentSong = document.getElementById(`play-${index}`);
+        if (currentSong) {
+          currentSong.classList.add("playing");
+        }
+      }
     })
     .catch(err => {
       console.error("Audio play failed:", err);
@@ -137,6 +145,10 @@ function toggleLike(song, index) {
   localStorage.setItem("likedSongs", JSON.stringify(likedSongs));
 }
 
+function truncateText(text, maxLength = 15) {
+  return text.length > maxLength ? text.slice(0, maxLength - 3) + '...' : text;
+}
+
 masterPlay.addEventListener("click", () => {
   if (audio.paused || audio.currentTime <= 0) {
     audio.play().then(() => {
@@ -147,6 +159,53 @@ masterPlay.addEventListener("click", () => {
     audio.pause();
     masterPlay.src = "icons/play-solid.svg";
     gif.style.opacity = 0;
+    document.querySelectorAll(".songListIcon").forEach(icon => icon.classList.remove("playing"));
+  }
+});
+
+document.addEventListener("keydown", function (e) {
+  const tag = e.target.tagName.toLowerCase();
+  if (tag === 'input' || tag === 'textarea') return;
+
+  switch (e.key) {
+    case " ": // Spacebar
+      e.preventDefault();
+      masterPlay.click();
+      break;
+
+    case "ArrowRight": // Next
+      document.getElementById("nextBtn").click();
+      break;
+
+    case "ArrowLeft": // Previous
+      document.getElementById("previousBtn").click();
+      break;
+
+    case "ArrowUp": // Volume up
+      e.preventDefault();
+      volumeControl.value = Math.min(1, parseFloat(volumeControl.value) + 0.1).toFixed(2);
+      audio.volume = volumeControl.value;
+      break;
+
+    case "ArrowDown": // Volume down
+      e.preventDefault();
+      volumeControl.value = Math.max(0, parseFloat(volumeControl.value) - 0.1).toFixed(2);
+      audio.volume = volumeControl.value;
+      break;
+
+    case "m":
+    case "M": // Mute toggle
+      e.preventDefault();
+      if (audio.volume > 0) {
+        audio.volume = 0;
+        volumeControl.value = 0;
+        volumeIcon.src = "icons/volume-mute-solid.svg";
+      } else {
+        audio.volume = 0.5;
+        volumeControl.value = 0.5;
+        volumeIcon.src = "icons/volume-up-solid.svg";
+      }
+      break;
   }
 });
 
@@ -166,11 +225,11 @@ volumeIcon.addEventListener("click", () => {
   if (audio.volume > 0) {
     audio.volume = 0;
     volumeControl.value = 0; 
-    volumeIcon[0].src = "icons/volume-mute-solid.svg";
+    volumeIcon.src = "icons/volume-xmark-solid.svg";
   } else {
     audio.volume = 0.5;
     volumeControl.value = 0.5;
-    volumeIcon[0].src = "icons/volume-up-solid.svg";
+    volumeIcon.src = "icons/volume-high-solid.svg";
   }
 });
 audio.addEventListener("ended", () => {
