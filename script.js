@@ -264,14 +264,70 @@ volumeControl.addEventListener("input", () => {
   audio.volume = volumeControl.value;
 });
 
-const scrollContainer = document.querySelector(".songItemcontainer");
-scrollContainer.addEventListener("scroll", () => {
+function throttle(func, limit) {
+  let inThrottle;
+  return function() {
+    const args = arguments;
+    const context = this;
+    if (!inThrottle) {
+      func.apply(context, args);
+      inThrottle = true;
+      setTimeout(() => inThrottle = false, limit);
+    }
+  }
+}
+
+const throttledScrollHandler = throttle(() => {
   const threshold = 100;
-  const atBottom = scrollContainer.scrollTop + scrollContainer.clientHeight >= scrollContainer.scrollHeight - threshold;
+  const atBottom = scrollContainer.scrollTop + scrollContainer.clientHeight >= 
+    scrollContainer.scrollHeight - threshold;
 
   if (atBottom && !loading) {
     offset += 7;
     loadSongs(offset);
+  }
+}, 250);
+
+const scrollContainer = document.querySelector(".songItemcontainer");
+scrollContainer.addEventListener("scroll", throttledScrollHandler);
+
+// Add to script.js
+function showMobileLoader() {
+  const loader = document.createElement('div');
+  loader.className = 'mobile-loader';
+  loader.innerHTML = `
+    <div class="spinner"></div>
+    <p>Loading more songs...</p>
+  `;
+  document.querySelector('.songItemcontainer').appendChild(loader);
+}
+
+function hideMobileLoader() {
+  const loader = document.querySelector('.mobile-loader');
+  if (loader) loader.remove();
+}
+
+// Add to script.js
+let wakeLock = null;
+
+async function requestWakeLock() {
+  try {
+    if ('wakeLock' in navigator) {
+      wakeLock = await navigator.wakeLock.request('screen');
+    }
+  } catch (err) {
+    console.log('Wake lock not supported');
+  }
+}
+
+// Call when music starts playing
+audio.addEventListener('play', requestWakeLock);
+
+// Release when paused
+audio.addEventListener('pause', () => {
+  if (wakeLock) {
+    wakeLock.release();
+    wakeLock = null;
   }
 });
 

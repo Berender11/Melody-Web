@@ -242,6 +242,8 @@ nav {
 
 .songInfo img {
   opacity: 0;
+  width: 40px;
+  height: 15px;
   transition: opacity 0.3s ease-in;
 }
 
@@ -318,4 +320,48 @@ input[type="range"]::-moz-range-thumb {
   width: 10px;
   background: var(--accent);
   border-radius: 50%;
+}
+
+/* Add to theme.css */
+.mobile-touch-feedback {
+  transform: scale(0.95);
+  transition: transform 0.1s ease;
+}
+
+@media (max-width: 600px) {
+  .songItem:active,
+  .icons img:active,
+  .songListIcon:active,
+  .likeIcon:active {
+    transform: scale(0.95);
+    transition: transform 0.1s ease;
+  }
+  
+  /* Better hover states for mobile */
+  .songItem:hover {
+    transform: none; /* Remove scale on mobile */
+    background: var(--card-hover);
+  }
+}
+
+/* Add to theme.css */
+@media (max-width: 600px) {
+  button:focus,
+  input:focus,
+  .songItem:focus,
+  .icons img:focus {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  
+  /* Ensure interactive elements are at least 44px */
+  .icons img,
+  .songListIcon,
+  .likeIcon,
+  .volumeIcon {
+    min-width: 44px;
+    min-height: 44px;
+    padding: 10px;
+    box-sizing: border-box;
+  }
 }

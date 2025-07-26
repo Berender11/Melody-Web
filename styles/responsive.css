@@ -15,7 +15,43 @@
 }
 
 @media (max-width: 600px) {
+  nav {
+    flex-direction: column;
+    align-items: center;
+    padding: 12px 0;
+  }
+  .nav-left p {
+    opacity: 0;
+  }
+
+  .nav-right {
+    gap: 16px;
+    margin-right: auto;
+  }
+  
+  .nav-right a {
+    padding: 8px 12px;
+    border-radius: 8px;
+    transition: background-color 0.2s;
+  }
+  
+  .nav-right a:hover {
+    background-color: var(--card-bg);
+  }
+
+    input[type="range"]::-moz-range-thumb {
+    height: 20px;
+    width: 20px;
+  }
+  
+  /* Larger track for easier touching */
+  input[type="range"] {
+    height: 8px;
+    padding: 10px 0;
+  }
+
   .bottom {
+    height: 150px;
     padding: 16px 10px;
     flex-direction: column;
   }
@@ -24,10 +60,12 @@
     flex-direction: column;
     align-items: center;
     gap: 12px;
+    padding: 0 16px;
   }
 
   .volume-controls,
   .songInfo {
+    opacity: 0;
     justify-content: center;
     align-items: center;
     text-align: center;
@@ -49,4 +87,46 @@
   .likeIcon.liked {
     box-shadow: none;
   }
+
+    .songName {
+    font-size: 0.95rem;
+    max-width: 140px; /* Increased from 90px */
+    line-height: 1.2;
+  }
+  
+  .songItem {
+    height: 60px; /* Slightly taller for better readability */
+    padding: 0 12px;
+  }
+
+    .controls-bar {
+    padding: 0 16px;
+    gap: 16px;
+  }
+  
+  .volume-controls {
+    order: 1;
+    width: 100%;
+    justify-content: center;
+    margin-top: 8px;
+  }
+  
+  .time-progress {
+    order: 2;
+    align-self: flex-start;
+  }
+  
+  #songBar {
+    order: 3;
+    width: 100%;
+    margin: 8px 0;
+  }
+  
+  .songInfo {
+    order: 4;
+    width: 100%;
+    text-align: center;
+    margin-top: 8px;
+  }
 }
+
